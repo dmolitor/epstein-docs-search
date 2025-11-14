@@ -1,0 +1,10 @@
+[project]
+name = "epstein-docs-search"
+version = "0.1.0"
+requires-python = ">=3.14"
+dependencies = [
+    "pocketsearch>=0.41.0",
+    "requests>=2.32.5",
+    "shiny>=1.5.0",
+    "shinylive>=0.8.4",
+]
