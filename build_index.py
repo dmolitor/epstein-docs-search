@@ -24,8 +24,8 @@ with zipfile.ZipFile(zip_path, "r") as z:
 
 # Index directories:
 reader = pocketsearch.FileSystemReader(base_dir=str(Path(tmpdir) / "001"))
-db_path = base_dir / "data" / "index.db"
-gz_path = base_dir / "data" / "index.db.gz"
+db_path = base_dir / "app" / "data" / "index.db"
+gz_path = base_dir / "app" / "data" / "index.db.gz"
 
 if os.path.exists(db_path):
     os.remove(db_path)
