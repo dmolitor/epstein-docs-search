@@ -98,7 +98,7 @@ wheels = [
 ]
 
 [[package]]
-name = "epstein-docs"
+name = "epstein-docs-search"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
