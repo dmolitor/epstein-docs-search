@@ -8,4 +8,3 @@ ipython_config.py
 # Environments
 .venv
 .DS_Store
-/docs
