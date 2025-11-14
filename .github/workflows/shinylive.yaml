@@ -1,0 +1,35 @@
+name: Deploy Shinylive
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v2
+        with:
+          version: "latest"
+
+      - name: Sync environment from lockfile
+        run: uv sync --frozen
+
+      - name: Build Shinylive site to temp dir
+        run: |
+          TMPDIR=$(mktemp -d)
+          # run shinylive from the uv-managed environment
+          uv run shinylive export . "$TMPDIR"
+          echo "TMPDIR=$TMPDIR" >> $GITHUB_ENV
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ${{ env.TMPDIR }}
+          force_orphan: true
