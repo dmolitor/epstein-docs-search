@@ -3,12 +3,24 @@ from shiny import App, render, ui, reactive
 from pathlib import Path
 import pocketsearch
 import math
+import gzip
+import shutil
+import os
 
 base_dir = Path(__file__).parent
+data_dir = base_dir / "data"
 
-# Create a reader for the database
+db_path = data_dir / "index.db"
+gz_path = data_dir / "index.db.gz"
+
+# --- Decompress if needed (minimal change) ---
+if (not db_path.exists()) and gz_path.exists():
+    with gzip.open(gz_path, "rb") as f_in, open(db_path, "wb") as f_out:
+        shutil.copyfileobj(f_in, f_out)
+
+# Create a reader for the database (unchanged)
 Reader = pocketsearch.PocketReader(
-    db_name=str(base_dir / "data" / "index.db"),
+    db_name=str(db_path),
     schema=pocketsearch.FileSystemReader.FSSchema
 )
 
